@@ -4,16 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('short_description');
             $table->text('description')->nullable();
-            $table->datetime('execution_datetime');
-            $table->foreignId('status_id')->constrained()->nullOnDelete();
+            $table->dateTime('execution_datetime');
+            $table->unsignedBigInteger('status_id')->nullable();
+            $table->foreign('status_id')
+                ->references('id')
+                ->on('statuses')
+                ->onDelete('set null');
             $table->timestamps();
         });
     }

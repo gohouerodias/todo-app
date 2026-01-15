@@ -18,7 +18,7 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->sentence,
+            'short_description' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
             'execution_datetime' => $this->faker->dateTimeBetween('+1 days', '+1 month'),
             'status_id' =>Status::inRandomOrder()->first()?->id ?? Status::factory(),
