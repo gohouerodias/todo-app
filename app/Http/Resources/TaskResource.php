@@ -11,7 +11,7 @@ class TaskResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'short_description' => $this->short_description,
             'description' => $this->description,
             'execution_datetime' => $this->execution_datetime,
             'status' => new StatusResource($this->whenLoaded('status')),
