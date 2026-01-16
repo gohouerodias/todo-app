@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
-    // GET /api/reminders
+    // GET /api/Tasks
     public function index()
     {
         return response()->json(
@@ -17,7 +17,7 @@ class TaskController extends Controller
         );
     }
 
-    // POST /api/reminders
+    // POST /api/Tasks
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -35,26 +35,26 @@ class TaskController extends Controller
             ], 422);
         }
 
-        $reminder = Task::create($validator->validated());
+        $task = Task::create($validator->validated());
 
         return response()->json([
             'success' => true,
-            'message' => 'Reminder created successfully.',
-            'data' => $reminder
+            'message' => 'task created successfully.',
+            'data' => $task
         ], 201);
     }
-    // GET /api/reminders/{id}
+    // GET /api/Tasks/{id}
     public function show($id)
     {
-        $reminder = Task::with('status')->findOrFail($id);
+        $task = Task::with('status')->findOrFail($id);
 
-        return response()->json($reminder);
+        return response()->json($task);
     }
 
-    // PUT /api/reminders/{id}
+    // PUT /api/Tasks/{id}
     public function update(Request $request, $id)
     {
-        $reminder = Task::findOrFail($id);
+        $task = Task::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
             'short_description' => 'sometimes|required|string|max:255',
@@ -71,22 +71,22 @@ class TaskController extends Controller
             ], 422);
         }
 
-        $reminder->update($validator->validated());
+        $task->update($validator->validated());
 
         return response()->json([
             'success' => true,
-            'message' => 'Reminder updated successfully.',
-            'data' => $reminder
+            'message' => 'task updated successfully.',
+            'data' => $task
         ]);
     }
 
-    // DELETE /api/reminders/{id}
+    // DELETE /api/Tasks/{id}
     public function destroy($id)
     {
         Task::findOrFail($id)->delete();
 
         return response()->json([
-            'message' => 'Reminder deleted successfully'
+            'message' => 'task deleted successfully'
         ]);
     }
 }
